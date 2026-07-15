@@ -1,0 +1,5 @@
+com\jersey\DBConnection.class
+com\jersey\MyResource.class
+com\jersey\StudentRepo.class
+com\jersey\StudentResource.class
+com\jersey\Student.class
