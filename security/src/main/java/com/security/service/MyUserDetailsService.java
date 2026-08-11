@@ -7,11 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.security.model.User;
+import com.security.model.Users;
 import com.security.repository.UserRepo;
 
 @Service
-public class MyUserDetailService implements UserDetailsService  {
+public class MyUserDetailsService implements UserDetailsService{
 
     @Autowired
     UserRepo repo;
@@ -20,21 +20,17 @@ public class MyUserDetailService implements UserDetailsService  {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user=repo.findByUsername(username);
-        if(user==null){
-            System.out.print("UserNotFound");
-            throw new UsernameNotFoundException("user not found");
-        }else{
-            return new UserPrincipal(user);
+        Users user=repo.findByUsername(username);
+        if (user==null) {
+            System.out.print("User Not Found");
+            throw new UsernameNotFoundException("UserNotFound");
         }
+        return new UserPrincipal(user);
     }
 
-    public User findUser(String username){
-        return repo.findByUsername(username);
+    public Users register(Users users){
+        users.setPassword(en.encode(users.getPassword()));
+        return repo.save(users);
     }
 
-    public User register(User user){
-        user.setPassword(en.encode(user.getPassword()));
-        return repo.save(user);
-    }
 }
