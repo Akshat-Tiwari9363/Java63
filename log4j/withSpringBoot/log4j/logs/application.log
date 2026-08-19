@@ -1,0 +1,65 @@
+2026-08-19 16:46:19,026 - com.log4j.Log4jApplication - : INFO ->Starting Log4jApplication using Java 25.0.2 with PID 29872 (D:\SpringSecurity\log4j\withSpringBoot\log4j\target\classes started by Akshat in D:\SpringSecurity\log4j\withSpringBoot\log4j) :: logStarting 
+ 2026-08-19 16:46:19,031 - com.log4j.Log4jApplication - : INFO ->No active profile set, falling back to 1 default profile: "default" :: logStartupProfileInfo 
+ 2026-08-19 16:46:19,409 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat initialized with port 8080 (http) :: initialize 
+ 2026-08-19 16:46:19,418 - org.apache.catalina.core.StandardService - : INFO ->Starting service [Tomcat] :: log 
+ 2026-08-19 16:46:19,419 - org.apache.catalina.core.StandardEngine - : INFO ->Starting Servlet engine: [Apache Tomcat/11.0.22] :: log 
+ 2026-08-19 16:46:19,445 - org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - : INFO ->Root WebApplicationContext: initialization completed in 389 ms :: prepareWebApplicationContext 
+ 2026-08-19 16:46:19,608 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat started on port 8080 (http) with context path '/' :: start 
+ 2026-08-19 16:46:19,611 - com.log4j.Log4jApplication - : INFO ->Started Log4jApplication in 0.806 seconds (process running for 0.979) :: logStarted 
+ 2026-08-19 16:46:28,985 - org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - : INFO ->Initializing Spring DispatcherServlet 'dispatcherServlet' :: log 
+ 2026-08-19 16:46:28,988 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Initializing Servlet 'dispatcherServlet' :: initServletBean 
+ 2026-08-19 16:46:28,991 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Completed initialization in 2 ms :: initServletBean 
+ 2026-08-19 16:46:29,066 - com.log4j.Controller - : INFO ->controler invoked :: getMethodName 
+ 2026-08-19 16:46:29,068 - com.log4j.Controller - : INFO ->back to controller :: getMethodName 
+ 2026-08-19 16:46:48,051 - com.log4j.Controller - : INFO ->controler invoked :: getMethodName 
+ 2026-08-19 16:46:48,052 - com.log4j.Controller - : INFO ->back to controller :: getMethodName 
+ 2026-08-19 16:47:17,036 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Commencing graceful shutdown. Waiting for active requests to complete :: shutDownGracefully 
+ 2026-08-19 16:47:17,042 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Graceful shutdown complete :: doShutdown 
+ 2026-08-19 16:47:36,751 - com.log4j.Log4jApplication - : INFO ->Starting Log4jApplication using Java 25.0.2 with PID 18420 (D:\SpringSecurity\log4j\withSpringBoot\log4j\target\classes started by Akshat in D:\SpringSecurity\log4j\withSpringBoot\log4j) :: logStarting 
+ 2026-08-19 16:47:36,753 - com.log4j.Log4jApplication - : INFO ->No active profile set, falling back to 1 default profile: "default" :: logStartupProfileInfo 
+ 2026-08-19 16:47:37,131 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat initialized with port 8080 (http) :: initialize 
+ 2026-08-19 16:47:37,140 - org.apache.catalina.core.StandardService - : INFO ->Starting service [Tomcat] :: log 
+ 2026-08-19 16:47:37,140 - org.apache.catalina.core.StandardEngine - : INFO ->Starting Servlet engine: [Apache Tomcat/11.0.22] :: log 
+ 2026-08-19 16:47:37,165 - org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - : INFO ->Root WebApplicationContext: initialization completed in 388 ms :: prepareWebApplicationContext 
+ 2026-08-19 16:47:37,346 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat started on port 8080 (http) with context path '/' :: start 
+ 2026-08-19 16:47:37,349 - com.log4j.Log4jApplication - : INFO ->Started Log4jApplication in 0.824 seconds (process running for 1.002) :: logStarted 
+ 2026-08-19 16:47:43,118 - org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - : INFO ->Initializing Spring DispatcherServlet 'dispatcherServlet' :: log 
+ 2026-08-19 16:47:43,119 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Initializing Servlet 'dispatcherServlet' :: initServletBean 
+ 2026-08-19 16:47:43,121 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Completed initialization in 1 ms :: initServletBean 
+ 2026-08-19 16:47:43,135 - com.log4j.Controller - : INFO ->controler invoked :: getMethodName 
+ 2026-08-19 16:47:43,136 - com.log4j.Controller - : INFO ->back to controller :: getMethodName 
+ 2026-08-19 16:48:15,965 - com.log4j.Controller - : INFO ->controler invoked :: getMethodName 
+ 2026-08-19 16:48:15,966 - com.log4j.Controller - : INFO ->back to controller :: getMethodName 
+ 2026-08-19 16:48:49,890 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Commencing graceful shutdown. Waiting for active requests to complete :: shutDownGracefully 
+ 2026-08-19 16:48:49,894 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Graceful shutdown complete :: doShutdown 
+ 2026-08-19 16:49:10,083 - com.log4j.Log4jApplication - : INFO ->Starting Log4jApplication using Java 25.0.2 with PID 10976 (D:\SpringSecurity\log4j\withSpringBoot\log4j\target\classes started by Akshat in D:\SpringSecurity\log4j\withSpringBoot\log4j) :: logStarting 
+ 2026-08-19 16:49:10,085 - com.log4j.Log4jApplication - : INFO ->No active profile set, falling back to 1 default profile: "default" :: logStartupProfileInfo 
+ 2026-08-19 16:49:10,477 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat initialized with port 8080 (http) :: initialize 
+ 2026-08-19 16:49:10,487 - org.apache.catalina.core.StandardService - : INFO ->Starting service [Tomcat] :: log 
+ 2026-08-19 16:49:10,487 - org.apache.catalina.core.StandardEngine - : INFO ->Starting Servlet engine: [Apache Tomcat/11.0.22] :: log 
+ 2026-08-19 16:49:10,512 - org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - : INFO ->Root WebApplicationContext: initialization completed in 401 ms :: prepareWebApplicationContext 
+ 2026-08-19 16:49:10,688 - org.springframework.boot.tomcat.TomcatWebServer - : INFO ->Tomcat started on port 8080 (http) with context path '/' :: start 
+ 2026-08-19 16:49:10,691 - com.log4j.Log4jApplication - : INFO ->Started Log4jApplication in 0.832 seconds (process running for 1.005) :: logStarted 
+ 2026-08-19 16:49:18,104 - org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - : INFO ->Initializing Spring DispatcherServlet 'dispatcherServlet' :: log 
+ 2026-08-19 16:49:18,105 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Initializing Servlet 'dispatcherServlet' :: initServletBean 
+ 2026-08-19 16:49:18,106 - org.springframework.web.servlet.DispatcherServlet - : INFO ->Completed initialization in 1 ms :: initServletBean 
+ 2026-08-19 16:49:18,122 - com.log4j.Controller - : INFO ->controler invoked :: getMethodName 
+ 2026-08-19 16:49:18,122 - com.log4j.Controller - : INFO ->back to controller :: getMethodName 
+ 2026-08-19 16:50:57,762 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Commencing graceful shutdown. Waiting for active requests to complete :: shutDownGracefully 
+ 2026-08-19 16:50:57,768 - org.springframework.boot.tomcat.GracefulShutdown - : INFO ->Graceful shutdown complete :: doShutdown 
+ 2026-08-19 16:51:19,627 - com.log4j.Log4jApplication - : INFO -> Starting Log4jApplication using Java 25.0.2 with PID 12632 (D:\SpringSecurity\log4j\withSpringBoot\log4j\target\classes started by Akshat in D:\SpringSecurity\log4j\withSpringBoot\log4j) :: logStarting 
+2026-08-19 16:51:19,628 - com.log4j.Log4jApplication - : DEBUG -> Running with Spring Boot v4.1.0, Spring v7.0.8 :: logStarting 
+2026-08-19 16:51:19,629 - com.log4j.Log4jApplication - : INFO -> No active profile set, falling back to 1 default profile: "default" :: logStartupProfileInfo 
+2026-08-19 16:51:20,024 - org.springframework.boot.tomcat.TomcatWebServer - : INFO -> Tomcat initialized with port 8080 (http) :: initialize 
+2026-08-19 16:51:20,032 - org.apache.catalina.core.StandardService - : INFO -> Starting service [Tomcat] :: log 
+2026-08-19 16:51:20,032 - org.apache.catalina.core.StandardEngine - : INFO -> Starting Servlet engine: [Apache Tomcat/11.0.22] :: log 
+2026-08-19 16:51:20,056 - org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - : INFO -> Root WebApplicationContext: initialization completed in 398 ms :: prepareWebApplicationContext 
+2026-08-19 16:51:20,222 - org.springframework.boot.tomcat.TomcatWebServer - : INFO -> Tomcat started on port 8080 (http) with context path '/' :: start 
+2026-08-19 16:51:20,225 - com.log4j.Log4jApplication - : INFO -> Started Log4jApplication in 0.818 seconds (process running for 0.993) :: logStarted 
+2026-08-19 16:51:27,852 - org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - : INFO -> Initializing Spring DispatcherServlet 'dispatcherServlet' :: log 
+2026-08-19 16:51:27,853 - org.springframework.web.servlet.DispatcherServlet - : INFO -> Initializing Servlet 'dispatcherServlet' :: initServletBean 
+2026-08-19 16:51:27,854 - org.springframework.web.servlet.DispatcherServlet - : INFO -> Completed initialization in 1 ms :: initServletBean 
+2026-08-19 16:51:27,868 - com.log4j.Controller - : INFO -> controler invoked :: getMethodName 
+2026-08-19 16:51:27,868 - com.log4j.Controller - : DEBUG -> service invoked :: getMethodName 
+2026-08-19 16:51:27,869 - com.log4j.Service1 - : TRACE -> service invoked :: getMessage 
+2026-08-19 16:51:27,869 - com.log4j.Controller - : INFO -> back to controller :: getMethodName 

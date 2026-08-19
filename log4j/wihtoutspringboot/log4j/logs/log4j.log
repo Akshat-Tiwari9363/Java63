@@ -1,0 +1,5 @@
+2026-08-19 16:17:22,337 - log4j.App - [process] - (INFO) - info process - 
+2026-08-19 16:17:22,338 - log4j.App - [process] - (ERROR) - error process - 
+2026-08-19 16:17:22,338 - log4j.App - [process] - (WARN) - warn process - 
+2026-08-19 16:17:22,339 - log4j.App - [process] - (DEBUG) - debug process - 
+2026-08-19 16:17:22,339 - log4j.App - [process] - (FATAL) - fatal process - 
