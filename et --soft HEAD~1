@@ -1,0 +1,15 @@
+[33m9a8eea7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Remove OAuth secrets
+[33mbf25954[m OAuth2 Application
+[33ma15ab7f[m spring boot mvc project
+[33mea0a683[m OAuth2 Application
+[33mdc83a84[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m jwt application
+[33md21c96a[m csrf
+[33m3f4cb6c[m spring security
+[33md87a66d[m hibernate using gradle
+[33m3a9d401[m rest api crud using springboot
+[33m664768e[m telusko RestAPI project
+[33md98d8dd[m Delete .github/workflows/maven.yml
+[33m7b30fe1[m Add Java CI workflow with Maven support
+[33m4207c04[m Selection sort
+[33mc026b42[m Bubble sort
+[33mc2c096c[m Day3 package

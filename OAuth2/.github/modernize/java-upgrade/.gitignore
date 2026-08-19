@@ -1,0 +1,16 @@
+# Environment / secrets
+.env
+application-local.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Build
+target/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
