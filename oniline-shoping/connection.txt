@@ -1,0 +1,505 @@
+PROJECT OVERVIEW:
+This frontend is a React + Vite ecommerce product catalog and shopping cart application. It allows users to browse products, filter by category, search products, view product details, add products to a local cart, update cart quantities, checkout by reducing product stock, and create/update/delete products with image upload support.
+
+Main modules:
+- Home/catalog page: Lists all products and displays product images.
+- Navbar: Category filter, product search, theme toggle, cart navigation.
+- Product detail page: Shows product details, image, stock, add-to-cart, update, and delete actions.
+- Add product page: Multipart form to create a product with image.
+- Update product page: Multipart form to edit product data and image.
+- Cart/checkout: LocalStorage-backed cart, stock-limited quantity changes, checkout stock update.
+
+TECH STACK:
+Frontend:
+- React 18
+- Vite 5
+- React Router DOM 6
+- Axios
+- Bootstrap 5
+- React Bootstrap
+- Bootstrap Icons
+
+Required backend:
+- Java 17 or later
+- Spring Boot 3.x
+- Spring MVC
+- Spring Data JPA
+- Hibernate
+- MySQL or PostgreSQL
+- Spring Security
+- JWT authentication
+- REST APIs
+- Multipart file upload support
+
+BACKEND REQUIREMENTS:
+Build a Spring Boot REST backend with:
+- Product catalog APIs under /api.
+- Multipart product create/update APIs that receive imageFile and product parts.
+- Image retrieval API returning binary image content.
+- Product search API using keyword matching.
+- Stock update behavior during checkout.
+- JWT-ready security. Current frontend supports Authorization: Bearer <token> when localStorage.token exists.
+- CORS enabled for the Vite frontend origin.
+
+Recommended architecture:
+- Controller layer: REST request/response handling.
+- Service layer: Business logic, validation, stock rules, image handling.
+- Repository layer: Spring Data JPA persistence.
+- Entity layer: Product, User, Role, Order, OrderItem models.
+- DTO layer: Request/response objects.
+- Security layer: JWT filter, authentication provider, password encoder, security config.
+- Exception layer: Global API error responses.
+
+API DOCUMENTATION:
+
+1. API Name: Get all products
+HTTP Method: GET
+Endpoint URL: /api/products
+Request JSON: none
+Response JSON:
+[
+  {
+    "id": 1,
+    "name": "iPhone 15",
+    "brand": "Apple",
+    "description": "Smartphone",
+    "price": 799.99,
+    "category": "Mobile",
+    "releaseDate": "2026-01-15",
+    "productAvailable": true,
+    "stockQuantity": 25,
+    "imageName": "iphone.jpg",
+    "imageType": "image/jpeg"
+  }
+]
+Required headers: Accept: application/json
+Authentication requirement: Public read is supported by current frontend. Can be protected later if desired.
+Error responses:
+- 500: {"status":500,"message":"Unable to fetch products","path":"/api/products"}
+
+2. API Name: Search products
+HTTP Method: GET
+Endpoint URL: /api/products/search?keyword={keyword}
+Request JSON: none
+Response JSON: Same array format as GET /api/products.
+Required headers: Accept: application/json
+Authentication requirement: Public read.
+Search behavior: Match keyword against name, brand, category, or description using case-insensitive contains.
+Error responses:
+- 400: {"status":400,"message":"keyword is required","path":"/api/products/search"}
+- 500: {"status":500,"message":"Unable to search products","path":"/api/products/search"}
+
+3. API Name: Get product by ID
+HTTP Method: GET
+Endpoint URL: /api/product/{id}
+Request JSON: none
+Response JSON:
+{
+  "id": 1,
+  "name": "iPhone 15",
+  "brand": "Apple",
+  "description": "Smartphone",
+  "price": 799.99,
+  "category": "Mobile",
+  "releaseDate": "2026-01-15",
+  "productAvailable": true,
+  "stockQuantity": 25,
+  "imageName": "iphone.jpg",
+  "imageType": "image/jpeg"
+}
+Required headers: Accept: application/json
+Authentication requirement: Public read.
+Error responses:
+- 404: {"status":404,"message":"Product not found","path":"/api/product/1"}
+
+4. API Name: Get product image
+HTTP Method: GET
+Endpoint URL: /api/product/{id}/image
+Request JSON: none
+Response: Binary image bytes.
+Required headers: Accept: image/*
+Authentication requirement: Public read.
+Response headers:
+- Content-Type: image/jpeg or image/png
+- Content-Disposition: inline; filename="{imageName}"
+Error responses:
+- 404: {"status":404,"message":"Product image not found","path":"/api/product/1/image"}
+
+5. API Name: Create product
+HTTP Method: POST
+Endpoint URL: /api/product
+Request type: multipart/form-data
+Required parts:
+- imageFile: image file
+- product: application/json blob
+Request JSON in product part:
+{
+  "name": "iPhone 15",
+  "brand": "Apple",
+  "description": "Smartphone",
+  "price": 799.99,
+  "category": "Mobile",
+  "stockQuantity": 25,
+  "releaseDate": "2026-01-15",
+  "productAvailable": true
+}
+Response JSON:
+{
+  "id": 1,
+  "name": "iPhone 15",
+  "brand": "Apple",
+  "description": "Smartphone",
+  "price": 799.99,
+  "category": "Mobile",
+  "releaseDate": "2026-01-15",
+  "productAvailable": true,
+  "stockQuantity": 25,
+  "imageName": "iphone.jpg",
+  "imageType": "image/jpeg"
+}
+Required headers:
+- Content-Type: multipart/form-data
+- Authorization: Bearer <jwt> if admin protection is enabled
+Authentication requirement: Recommended ADMIN only.
+Error responses:
+- 400: {"status":400,"message":"Validation failed","errors":{"name":"Name is required"}}
+- 401: {"status":401,"message":"Authentication required"}
+- 403: {"status":403,"message":"Admin access required"}
+- 415: {"status":415,"message":"Only image files are allowed"}
+
+6. API Name: Update product
+HTTP Method: PUT
+Endpoint URL: /api/product/{id}
+Request type: multipart/form-data
+Required parts:
+- product: application/json blob
+Optional parts:
+- imageFile: image file. The frontend sends it when available.
+Request JSON in product part:
+{
+  "id": 1,
+  "name": "iPhone 15 Pro",
+  "brand": "Apple",
+  "description": "Updated smartphone",
+  "price": 999.99,
+  "category": "Mobile",
+  "releaseDate": "2026-01-15",
+  "productAvailable": true,
+  "stockQuantity": 18
+}
+Response JSON: Updated product object in the same format as GET /api/product/{id}.
+Required headers:
+- Content-Type: multipart/form-data
+- Authorization: Bearer <jwt> if admin protection is enabled
+Authentication requirement: Recommended ADMIN only. Current cart checkout uses this endpoint to reduce stock, so either keep it user-accessible for stock-only updates or add a dedicated checkout API before locking this down.
+Error responses:
+- 400: {"status":400,"message":"Validation failed"}
+- 404: {"status":404,"message":"Product not found"}
+- 409: {"status":409,"message":"Insufficient stock"}
+
+7. API Name: Delete product
+HTTP Method: DELETE
+Endpoint URL: /api/product/{id}
+Request JSON: none
+Response JSON:
+{
+  "message": "Product deleted successfully",
+  "id": 1
+}
+Required headers:
+- Authorization: Bearer <jwt> if admin protection is enabled
+Authentication requirement: Recommended ADMIN only.
+Error responses:
+- 401: {"status":401,"message":"Authentication required"}
+- 403: {"status":403,"message":"Admin access required"}
+- 404: {"status":404,"message":"Product not found"}
+
+8. API Name: User registration
+HTTP Method: POST
+Endpoint URL: /api/auth/register
+Request JSON:
+{
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "password": "StrongPassword123!",
+  "role": "ADMIN"
+}
+Response JSON:
+{
+  "id": 1,
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "role": "ADMIN"
+}
+Required headers: Content-Type: application/json
+Authentication requirement: Public for first setup or ADMIN only after initial setup.
+Error responses:
+- 400: {"status":400,"message":"Email already exists"}
+
+9. API Name: User login
+HTTP Method: POST
+Endpoint URL: /api/auth/login
+Request JSON:
+{
+  "email": "admin@example.com",
+  "password": "StrongPassword123!"
+}
+Response JSON:
+{
+  "token": "jwt-token",
+  "tokenType": "Bearer",
+  "expiresIn": 86400,
+  "user": {
+    "id": 1,
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "role": "ADMIN"
+  }
+}
+Required headers: Content-Type: application/json
+Authentication requirement: Public.
+Frontend integration note: Store response.token in localStorage as token. The axios client automatically sends Authorization: Bearer <token>.
+Error responses:
+- 401: {"status":401,"message":"Invalid email or password"}
+
+10. Recommended API Name: Checkout order
+HTTP Method: POST
+Endpoint URL: /api/orders/checkout
+Current frontend behavior: It updates stock by calling PUT /api/product/{id} for each cart item. For a production backend, implement this endpoint and later update the frontend to use it atomically.
+Request JSON:
+{
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 3, "quantity": 1 }
+  ]
+}
+Response JSON:
+{
+  "id": 1001,
+  "status": "CONFIRMED",
+  "totalAmount": 1599.98,
+  "items": [
+    {
+      "productId": 1,
+      "productName": "iPhone 15",
+      "quantity": 2,
+      "unitPrice": 799.99,
+      "lineTotal": 1599.98
+    }
+  ],
+  "createdAt": "2026-07-20T10:30:00Z"
+}
+Required headers:
+- Content-Type: application/json
+- Authorization: Bearer <jwt> if user checkout is protected
+Authentication requirement: Recommended USER or ADMIN.
+Error responses:
+- 409: {"status":409,"message":"Insufficient stock for iPhone 15"}
+
+DATABASE DESIGN:
+
+Table: products
+Columns:
+- id BIGINT PRIMARY KEY AUTO_INCREMENT
+- name VARCHAR(150) NOT NULL
+- brand VARCHAR(100) NOT NULL
+- description TEXT NOT NULL
+- price DECIMAL(10,2) NOT NULL
+- category VARCHAR(80) NOT NULL
+- release_date DATE NOT NULL
+- product_available BOOLEAN NOT NULL DEFAULT TRUE
+- stock_quantity INT NOT NULL DEFAULT 0
+- image_name VARCHAR(255)
+- image_type VARCHAR(100)
+- image_data LONGBLOB for MySQL or BYTEA for PostgreSQL
+- created_at TIMESTAMP NOT NULL
+- updated_at TIMESTAMP NOT NULL
+
+Table: users
+Columns:
+- id BIGINT PRIMARY KEY AUTO_INCREMENT
+- name VARCHAR(120) NOT NULL
+- email VARCHAR(180) NOT NULL UNIQUE
+- password_hash VARCHAR(255) NOT NULL
+- role VARCHAR(30) NOT NULL
+- enabled BOOLEAN NOT NULL DEFAULT TRUE
+- created_at TIMESTAMP NOT NULL
+- updated_at TIMESTAMP NOT NULL
+
+Table: orders
+Columns:
+- id BIGINT PRIMARY KEY AUTO_INCREMENT
+- user_id BIGINT NULL
+- status VARCHAR(30) NOT NULL
+- total_amount DECIMAL(10,2) NOT NULL
+- created_at TIMESTAMP NOT NULL
+- updated_at TIMESTAMP NOT NULL
+Foreign keys:
+- user_id REFERENCES users(id)
+
+Table: order_items
+Columns:
+- id BIGINT PRIMARY KEY AUTO_INCREMENT
+- order_id BIGINT NOT NULL
+- product_id BIGINT NOT NULL
+- product_name VARCHAR(150) NOT NULL
+- quantity INT NOT NULL
+- unit_price DECIMAL(10,2) NOT NULL
+- line_total DECIMAL(10,2) NOT NULL
+Foreign keys:
+- order_id REFERENCES orders(id)
+- product_id REFERENCES products(id)
+
+Relationships:
+- User one-to-many Order.
+- Order one-to-many OrderItem.
+- Product one-to-many OrderItem.
+
+JAVA BACKEND STRUCTURE:
+
+src/main/java/com/example/ecommerce
+├── controller
+├── service
+├── repository
+├── entity
+├── dto
+├── security
+├── config
+└── exception
+
+Package responsibilities:
+- controller: ProductController, AuthController, OrderController. Defines REST endpoints and HTTP status codes.
+- service: ProductService, AuthService, OrderService. Contains business logic, stock updates, validation, image handling.
+- repository: ProductRepository, UserRepository, OrderRepository, OrderItemRepository.
+- entity: JPA entities mapped to database tables.
+- dto: Request and response DTOs such as ProductRequest, ProductResponse, LoginRequest, AuthResponse.
+- security: JwtService, JwtAuthenticationFilter, CustomUserDetailsService, SecurityConfig.
+- config: CORS, Jackson, OpenAPI, application-level configuration.
+- exception: GlobalExceptionHandler and custom exceptions such as ResourceNotFoundException, InsufficientStockException.
+
+ENTITY MODELS:
+
+Product entity:
+- Class name: Product
+- Fields: Long id, String name, String brand, String description, BigDecimal price, String category, LocalDate releaseDate, Boolean productAvailable, Integer stockQuantity, String imageName, String imageType, byte[] imageData, Instant createdAt, Instant updatedAt
+- Relationships: OneToMany<OrderItem> orderItems
+- Validation rules: name required max 150, brand required max 100, description required, price >= 0, category required, releaseDate required, stockQuantity >= 0, imageType must start with image/.
+
+User entity:
+- Class name: User
+- Fields: Long id, String name, String email, String passwordHash, Role role, Boolean enabled, Instant createdAt, Instant updatedAt
+- Relationships: OneToMany<Order> orders
+- Validation rules: name required, email valid and unique, password hash required, role required.
+
+Role enum:
+- Values: USER, ADMIN
+
+Order entity:
+- Class name: Order
+- Fields: Long id, User user, OrderStatus status, BigDecimal totalAmount, Instant createdAt, Instant updatedAt
+- Relationships: ManyToOne<User>, OneToMany<OrderItem>
+- Validation rules: totalAmount >= 0, status required.
+
+OrderItem entity:
+- Class name: OrderItem
+- Fields: Long id, Order order, Product product, String productName, Integer quantity, BigDecimal unitPrice, BigDecimal lineTotal
+- Relationships: ManyToOne<Order>, ManyToOne<Product>
+- Validation rules: quantity >= 1, unitPrice >= 0, lineTotal >= 0.
+
+OrderStatus enum:
+- Values: PENDING, CONFIRMED, CANCELLED
+
+SECURITY:
+
+Authentication flow:
+1. User sends POST /api/auth/login with email and password.
+2. Backend validates credentials with Spring Security AuthenticationManager.
+3. Backend generates JWT containing subject email, userId, role, issuedAt, expiration.
+4. Frontend stores token in localStorage as token.
+5. Axios interceptor sends Authorization: Bearer <token> on every request.
+6. JwtAuthenticationFilter validates token and sets SecurityContext.
+
+JWT generation:
+- Use HS256 with a strong secret from environment variable JWT_SECRET.
+- Include claims: sub, userId, role.
+- Recommended expiration: 24 hours for access token.
+- Do not store passwords in JWT.
+
+Role-based authorization:
+- Public: GET /api/products, GET /api/products/search, GET /api/product/{id}, GET /api/product/{id}/image, POST /api/auth/login.
+- ADMIN: POST /api/product, PUT /api/product/{id}, DELETE /api/product/{id}.
+- USER or ADMIN: POST /api/orders/checkout.
+
+Important compatibility note:
+The current frontend checkout reduces stock through PUT /api/product/{id}. If PUT is ADMIN-only, checkout will fail for normal users. Production recommendation: add POST /api/orders/checkout and migrate the frontend cart checkout to use that single atomic endpoint.
+
+BACKEND DEVELOPMENT STEPS:
+1. Create a Spring Boot project with dependencies: Spring Web, Spring Data JPA, Spring Security, Validation, MySQL Driver or PostgreSQL Driver, Lombok optional, JWT library such as jjwt or java-jwt.
+2. Configure database connection in application.yml.
+3. Create Product entity and ProductRepository.
+4. Implement ProductService with create, update, delete, getById, getAll, search, and getImage methods.
+5. Implement ProductController under /api with the endpoints documented above.
+6. Enable multipart support and set max file size.
+7. Create User entity, UserRepository, Auth DTOs, AuthService, and AuthController.
+8. Add SecurityConfig, JwtService, JwtAuthenticationFilter, and password encoder.
+9. Configure CORS for the frontend origin.
+10. Seed an ADMIN user or allow first admin registration.
+11. Test product create/update with multipart/form-data where product is an application/json part and imageFile is a file part.
+12. Test frontend by setting VITE_API_BASE_URL=http://localhost:8080/api and running npm run dev.
+13. Later, add POST /api/orders/checkout and update the frontend checkout to use it instead of per-product PUT calls.
+
+CORS CONFIGURATION:
+Allow these origins during development:
+- http://localhost:5173
+- http://127.0.0.1:5173
+
+Spring Boot CORS example:
+@Bean
+CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
+    configuration.setExposedHeaders(List.of("Content-Disposition"));
+    configuration.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/api/**", configuration);
+    return source;
+}
+
+ENVIRONMENT VARIABLES:
+
+Frontend:
+- VITE_API_BASE_URL=http://localhost:8080/api
+
+Backend:
+- SERVER_PORT=8080
+- DB_URL=jdbc:mysql://localhost:3306/ecommerce or jdbc:postgresql://localhost:5432/ecommerce
+- DB_USERNAME=root
+- DB_PASSWORD=your_password
+- JWT_SECRET=replace_with_at_least_256_bit_secret
+- JWT_EXPIRATION_SECONDS=86400
+- SPRING_PROFILES_ACTIVE=dev
+- APP_CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+- MAX_FILE_SIZE=10MB
+- MAX_REQUEST_SIZE=10MB
+
+FRONTEND ROUTES:
+- /: Product catalog.
+- /product/:id: Product detail.
+- /add_product: Create product.
+- /product/update/:id: Update product.
+- /cart: Cart and checkout.
+
+DATA COMPATIBILITY RULES:
+- Categories must use these exact values for filtering: Laptop, Headphone, Mobile, Electronics, Toys, Fashion.
+- Product IDs should be numeric.
+- releaseDate must be ISO date format: yyyy-MM-dd.
+- price should be numeric and non-negative.
+- stockQuantity should be integer and non-negative.
+- productAvailable should be false when stockQuantity is 0.
+- Image endpoints must return valid image content types.
+
+FINAL NOTES FOR JAVA DEVELOPER:
+The frontend is ready to connect to a Spring Boot backend at /api. Start by implementing the product endpoints exactly as documented, because all visible frontend features depend on them. Authentication is JWT-ready on the frontend through localStorage.token, but the current UI does not include login/register screens. Admin protection can be enabled immediately if tokens are injected manually or after adding auth screens.
